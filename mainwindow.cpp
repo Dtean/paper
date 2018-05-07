@@ -275,32 +275,34 @@ void MainWindow::my_positiondisplay4(QMouseEvent *event) //鼠标在图内坐标
 void MainWindow::readData()//读取串口传过来的数据（每1000ms会进来一次，所以如果串口未传入数据，则会得到“空”）
 {
     requestData = my_serialport->readAll();  //读取串口数据(要求串口以ASCII码型发出)
+
+    qDebug() << requestData;
     //数据处理
-    QByteArrayList list = requestData.split(' ');
+//    QByteArrayList list = requestData.split(' ');
 
-    if(count < 1000)
-    {
-        if(list.length() > 5)
-        {
-            time[count] = list.at(0).toDouble();
-            A[count] = list.at(1).toDouble();
-            V[count] = list.at(2).toDouble();
-            temperature[count] = list.at(3).toDouble();
-            W[count] = list.at(4).toDouble();
-            changeRate = list.at(5).toDouble();
+//    if(count < 1000)
+//    {
+//        if(list.length() > 1)
+//        {
+//            time[count] = list.at(0).toDouble();
+//            A[count] = list.at(1).toDouble();
+//            V[count] = list.at(2).toDouble();
+//            temperature[count] = list.at(3).toDouble();
+//            W[count] = list.at(4).toDouble();
+//            changeRate = list.at(5).toDouble();
 
-            ui->le_temperature->setText(QString("%1℃").arg(temperature[count]));
+//            ui->le_temperature->setText(QString("%1℃").arg(temperature[count]));
 
 
-            if(changeRate != 0)
-            {
-                ui->le_ChangeRate->setText(QString("%1%").arg(changeRate));
-            }
-            qDebug() << count;
-            qDebug() << time[count] << A[count];
-            count++;
-        }
-    }
+//            if(changeRate != 0)
+//            {
+//                ui->le_ChangeRate->setText(QString("%1%").arg(changeRate));
+//            }
+//            qDebug() << count;
+//            qDebug() << time[count] ;
+//            count++;
+//        }
+//    }
 
     setupPlot1();
     setupPlot2();
