@@ -44,7 +44,7 @@ MainWindow::~MainWindow()
 void MainWindow::setupPlot1() //坐标图1的绘制
 {
     //setRange()用来设置坐标轴的范围和对其情况
-    ui->plot_1->xAxis->setRange(0, 6, Qt::AlignLeft);
+    ui->plot_1->xAxis->setRange(0, 14, Qt::AlignLeft);
     ui->plot_1->yAxis->setRange(0, 10,Qt::AlignLeading);
     //setLabel()为x，y轴设置标签
     ui->plot_1->xAxis->setLabel("时间(S)");
@@ -78,8 +78,8 @@ void MainWindow::setupPlot1() //坐标图1的绘制
 void MainWindow::setupPlot2() //坐标图2的绘制
 {
     //setRange()用来设置坐标轴的范围和对其情况
-    ui->plot_2->xAxis->setRange(0, 6, Qt::AlignLeft);
-    ui->plot_2->yAxis->setRange(0, 10,Qt::AlignLeading);
+    ui->plot_2->xAxis->setRange(0, 14, Qt::AlignLeft);
+    ui->plot_2->yAxis->setRange(0, 300,Qt::AlignLeading);
     //setLabel()为x，y轴设置标签
     ui->plot_2->xAxis->setLabel("时间(S)");
     ui->plot_2->yAxis->setLabel("电压(V)");
@@ -111,7 +111,7 @@ void MainWindow::setupPlot2() //坐标图2的绘制
 void MainWindow::setupPlot3() //坐标图3的绘制
 {
     //setRange()用来设置坐标轴的范围和对其情况
-    ui->plot_3->xAxis->setRange(0, 6, Qt::AlignLeft);
+    ui->plot_3->xAxis->setRange(0, 14, Qt::AlignLeft);
     ui->plot_3->yAxis->setRange(0, 10,Qt::AlignLeading);
     //setLabel()为x，y轴设置标签
     ui->plot_3->xAxis->setLabel("时间(S)");
@@ -144,8 +144,8 @@ void MainWindow::setupPlot3() //坐标图3的绘制
 void MainWindow::setupPlot4() //坐标图4的绘制
 {
     //setRange()用来设置坐标轴的范围和对其情况
-    ui->plot_4->xAxis->setRange(0, 6, Qt::AlignLeft);
-    ui->plot_4->yAxis->setRange(0, 10,Qt::AlignLeading);
+    ui->plot_4->xAxis->setRange(0, 14, Qt::AlignLeft);
+    ui->plot_4->yAxis->setRange(0, 2000,Qt::AlignLeading);
     //setLabel()为x，y轴设置标签
     ui->plot_4->xAxis->setLabel("时间(S)");
     ui->plot_4->yAxis->setLabel("功率(W)");
@@ -278,31 +278,32 @@ void MainWindow::readData()//读取串口传过来的数据（每1000ms会进来
 
     qDebug() << requestData;
     //数据处理
-//    QByteArrayList list = requestData.split(' ');
+    QByteArrayList list = requestData.split(' ');
 
-//    if(count < 1000)
-//    {
-//        if(list.length() > 1)
-//        {
-//            time[count] = list.at(0).toDouble();
-//            A[count] = list.at(1).toDouble();
-//            V[count] = list.at(2).toDouble();
-//            temperature[count] = list.at(3).toDouble();
-//            W[count] = list.at(4).toDouble();
-//            changeRate = list.at(5).toDouble();
+    if(count < 1000)
+    {
+        if(list.length() > 1)
+        {
+            V[count] = list.at(0).toDouble();
+            A[count] = list.at(1).toDouble();
+            W[count] = list.at(2).toDouble();
+            time[count] = list.at(3).toDouble();
+            time[count] += count;
+            temperature[count] = list.at(4).toDouble();
+            changeRate = list.at(5).toDouble();
 
-//            ui->le_temperature->setText(QString("%1℃").arg(temperature[count]));
+            ui->le_temperature->setText(QString("%1℃").arg(temperature[count]));
 
 
-//            if(changeRate != 0)
-//            {
-//                ui->le_ChangeRate->setText(QString("%1%").arg(changeRate));
-//            }
-//            qDebug() << count;
-//            qDebug() << time[count] ;
-//            count++;
-//        }
-//    }
+            if(changeRate != 0)
+            {
+                ui->le_ChangeRate->setText(QString("%1%").arg(changeRate));
+            }
+            qDebug() << count;
+            qDebug() << time[count] ;
+            count++;
+        }
+    }
 
     setupPlot1();
     setupPlot2();
